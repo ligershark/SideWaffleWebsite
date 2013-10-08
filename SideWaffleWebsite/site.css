@@ -15,7 +15,7 @@ header {
     padding-left: 170px;
 }
 
-    header img {
+    header #logo {
         position: absolute;
         left: 1em;
         top: 0;
@@ -31,12 +31,19 @@ header {
         font-size: 2em;
     }
 
-    iframe{
-        width: 514px;
-        height: 320px;
-        display: block;
-        margin: 2em auto 0 auto;
-    }
+#forkme {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+}
+
+iframe {
+    width: 514px;
+    height: 320px;
+    display: block;
+    margin: 2em auto 0 auto;
+}
 
 section {
     margin: 3em 0;
