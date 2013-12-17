@@ -1,6 +1,6 @@
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011">
   <Metadata>
-    <Identity Id="e6e2a48e-387d-4af2-9072-86a5276da6d4" Version="1.4" Language="en-US" Publisher="LigerShark" />
+    <Identity Id="e6e2a48e-387d-4af2-9072-86a5276da6d4" Version="1.5" Language="en-US" Publisher="LigerShark" />
     <DisplayName>SideWaffle Template Pack</DisplayName>
     <Description>A side dish filled with item- and project templates for all developers.</Description>
     <MoreInfo>http://sidewaffle.com</MoreInfo>
@@ -20,5 +20,6 @@
     <Asset Type="Microsoft.VisualStudio.ItemTemplate" Path="Output\ItemTemplates" />
     <Asset Type="Microsoft.VisualStudio.ProjectTemplate" Path="Output\ProjectTemplates" />
     <Asset Type="Microsoft.VisualStudio.VsPackage" Path="feed.pkgdef" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" Path="TemplateBuilder.dll" AssemblyName="TemplateBuilder, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" />
   </Assets>
 </PackageManifest>

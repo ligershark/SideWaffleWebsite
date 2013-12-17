@@ -47,6 +47,7 @@ iframe {
 
 section {
     margin: 3em 0;
+    clear: both;
 }
 
     section article {
@@ -64,4 +65,8 @@ section {
 footer {
     margin-top: 5em;
     text-align: center;
+}
+
+#inventory >ul{
+    float: left;
 }
