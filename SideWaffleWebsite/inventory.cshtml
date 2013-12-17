@@ -37,7 +37,7 @@
         {
             var attr = node.Attributes["Name"] ?? node.Attributes["Title"];
             string name = attr.InnerText;
-            if (!list.Contains(name))
+            if (!list.Contains(name) && name.IndexOf("sample", StringComparison.OrdinalIgnoreCase) == -1)
                 list.Add(name);
         }
 
