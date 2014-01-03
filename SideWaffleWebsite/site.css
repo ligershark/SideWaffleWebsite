@@ -7,6 +7,7 @@
 
 img {
     max-width: 100%;
+    border: none;
 }
 
 header {
@@ -30,6 +31,11 @@ header {
         margin-top: .3em;
         font-size: 2em;
     }
+
+#social {
+    text-align: center;
+    margin-top: 20px;
+}
 
 #forkme {
     position: absolute;
@@ -67,6 +73,6 @@ footer {
     text-align: center;
 }
 
-#inventory >ul{
+#inventory > ul {
     float: left;
 }
