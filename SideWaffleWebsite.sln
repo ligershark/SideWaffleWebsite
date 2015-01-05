@@ -1,9 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SideWaffleWebsite(1)", "http://localhost:24113", "{07EE48A4-5FD3-4DCE-9BE0-2C57126691AD}"
+# Visual Studio 14
+VisualStudioVersion = 14.0.22310.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SideWaffleWebsite", "http://localhost:24113", "{07EE48A4-5FD3-4DCE-9BE0-2C57126691AD}"
 	ProjectSection(WebsiteProperties) = preProject
-		Frontpage = "false"
 		UseIISExpress = "true"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_24113"
@@ -21,6 +22,11 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "SideWaffleWebsite(1)", "htt
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		SlnRelativePath = "SideWaffleWebsite\"
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EE15A014-D3A8-4F2F-8740-213D9D891BD3}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 	EndProjectSection
 EndProject
 Global
