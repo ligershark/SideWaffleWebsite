@@ -76,3 +76,10 @@ footer {
 #inventory > ul {
     float: left;
 }
+
+#version
+{
+    font-weight: 900;
+    font-size: large;
+    line-height: 2em;
+}
