@@ -77,3 +77,10 @@ footer {
     float: left;
     font-size: .8em;
 }
+
+.version
+{
+font-weight: 900;
+font-size: large;
+line-height: 2em;
+}
