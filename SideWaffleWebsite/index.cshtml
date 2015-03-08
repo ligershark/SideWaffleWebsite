@@ -15,6 +15,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>SideWaffle Template Pack for Visual Studio</title>
+    <link type="text/plain" rel="author" href="http://sidewaffle.com/humans.txt" />
     <link href="site.css" rel="stylesheet" />
 </head>
 <body>
@@ -82,8 +83,11 @@
             </ul>
 
             <p>The entire project is 100% community driven.</p>
-
             <ul>
+                <li>
+                    <h3 id="releasenotes">Release Notes</h3>
+                    @Html.Raw(File.ReadAllText(Server.MapPath("release-notes.html")))
+                </li>
                 <li>
                     <h3>Contributors</h3>
                     <ul>
@@ -117,7 +121,7 @@
     </aside>
 
     <footer>
-        <p>Copyright &copy; 2013</p>
+        <p>Copyright &copy; 2013-@DateTime.Now.Year</p>
     </footer>
 
     <script>
