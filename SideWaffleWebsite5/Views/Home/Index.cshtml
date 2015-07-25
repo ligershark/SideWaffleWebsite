@@ -1,0 +1,47 @@
+﻿<!-- Header -->
+<header>
+    <div class="container">
+        <div class="intro-text">
+            <div class="intro-lead-in">A collection of</div>
+            <div class="intro-lead-in">Project and Item Templates</div>
+            <a href="#download" class="page-scroll btn btn-lg btn-warning">Download Now</a>
+        </div>
+    </div>
+</header>
+
+<hr />
+
+<!-- About Section -->
+
+<hr />
+
+<!-- Features Section -->
+@await Html.PartialAsync("Features")
+<hr />
+
+<!-- Download Section -->
+<div id="download" class="container">
+    <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4 text-center">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Stable Release</div>
+                <div class="panel-body">
+                    <p>After installing, Visual Studio will automatically notify you of any updates to SideWaffle.</p>
+                    <a href="https://visualstudiogallery.msdn.microsoft.com/a16c2d07-b2e1-4a25-87d9-194f04e7a698" class="btn btn-success">Download</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4"></div>
+    </div>
+</div>
+
+<!-- Release Notes Section -->
+@await Html.PartialAsync("ReleaseNotes")
+
+<hr />
+
+<!-- Team -->
+@await Html.PartialAsync("Team")
+
+<hr />
