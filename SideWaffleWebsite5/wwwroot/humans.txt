@@ -18,7 +18,7 @@ Location: Tunis, Tunisia
 
 Tyler Hughes
 Site: http://tylerhughes.info/
-Twitter: @RandomlyKnighted
+Twitter: @thughesIT
 Location: Albertville, AL USA
 
 Matthew Kimber
@@ -170,7 +170,3 @@ Leniel Macaferi
 Site: http://leniel.net/
 Twitter: @johnleniel
 Location: Volta Redonda, RJ - Brazil
-
-Kent Cooper
-Twitter: @kcdevnc
-Location: Raleigh, NC
