@@ -13,11 +13,14 @@ namespace SideWaffleWebsite5
         {
             // Add MVC services to the services container.
             services.AddMvc();
+            services.AddTransient<SideWaffleWebsite5.Models.Client>();
         }
 
         // Configure is called after ConfigureServices is called.
         public void Configure(IApplicationBuilder app)
         {
+            app.UseMvc();
+
             // Add static files to the request pipeline.
             app.UseStaticFiles();
 

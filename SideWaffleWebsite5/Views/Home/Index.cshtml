@@ -17,25 +17,32 @@
 
 <!-- Features Section -->
 @await Html.PartialAsync("Features")
+
 <hr />
 
 <!-- Download Section -->
-<div id="download" class="container">
-    <div class="row">
-        <div class="col-sm-4"></div>
-        <div class="col-sm-4 text-center">
-            <div class="panel panel-primary">
-                <div class="panel-heading">Stable Release</div>
-                <div class="panel-body">
-                    <p>After installing, Visual Studio will automatically notify you of any updates to SideWaffle.</p>
-                    <a href="https://visualstudiogallery.msdn.microsoft.com/a16c2d07-b2e1-4a25-87d9-194f04e7a698" class="btn btn-success">Download</a>
-                </div>
+<section id="download">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Download</h2>
             </div>
         </div>
-        <div class="col-sm-4"></div>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4 text-center">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Stable Release</div>
+                    <div class="panel-body">
+                        <p>After installing, Visual Studio will automatically notify you of any updates to SideWaffle.</p>
+                        <a href="https://visualstudiogallery.msdn.microsoft.com/a16c2d07-b2e1-4a25-87d9-194f04e7a698" class="btn btn-success">Download</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
     </div>
-</div>
-
+</section>
 <!-- Release Notes Section -->
 @await Html.PartialAsync("ReleaseNotes")
 
