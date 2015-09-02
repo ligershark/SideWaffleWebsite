@@ -1,4 +1,10 @@
-﻿<section id="features">
+﻿@model IEnumerable<SideWaffleWebsite5.Models.Client>
+@inject SideWaffleWebsite5.Models.Client Client
+
+@Client.GetFeaturesList())
+
+<!--
+<section id="features">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -189,3 +195,4 @@
         </div>
     </div>
 </section>
+    -->
