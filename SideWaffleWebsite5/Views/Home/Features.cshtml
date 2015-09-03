@@ -1,9 +1,35 @@
-﻿@model IEnumerable<SideWaffleWebsite5.Models.Client>
+﻿@using System.Xml;
+@model IEnumerable<SideWaffleWebsite5.Models.Client>
 @inject SideWaffleWebsite5.Models.Client Client
 
-@Client.GetFeaturesList())
+@{
+    var xml = Client.GetFeaturesList();
+    XmlDocument doc = new XmlDocument();
+    doc.LoadXml(xml);
 
-<!--
+    var projectTemplates = GetUniqueNames(doc.SelectNodes("//ProjectTemplate"));
+    var itemTemplates = GetUniqueNames(doc.SelectNodes("//ItemTemplate"));
+    var snippets = GetUniqueNames(doc.SelectNodes("//Snippet"));
+}
+
+@functions{
+    List<string> GetUniqueNames(XmlNodeList nodes)
+    {
+        List<string> list = new List<string>();
+        foreach (XmlNode node in nodes)
+        {
+            var attr = node.Attributes["Name"] ?? node.Attributes["Title"];
+            string name = attr.InnerText;
+            if (!list.Contains(name) && name.IndexOf("sample", StringComparison.OrdinalIgnoreCase) == -1)
+                list.Add(name);
+        }
+
+        list.Sort();
+
+        return list;
+    }
+}
+
 <section id="features">
     <div class="container">
         <div class="row">
@@ -14,179 +40,64 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <h4 class="service-heading">Project Templates</h4>
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="webHeading">
                             <h4 class="panel-title">
                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#webPanel" aria-expanded="true" aria-controls="webPanel">
-                                    Web
+                                    Project Templates
                                 </a>
                             </h4>
                         </div>
                         <div id="webPanel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="webHeading">
                             <ul class="list-group">
-                                <li class="list-group-item">Durandal451</li>
-                                <li class="list-group-item">HTML5 Boiler Plate v4.3</li>
-                                <li class="list-group-item">Google Chrome Extension</li>
+                                    @foreach (string name in projectTemplates)
+                                    {
+                                        <li class="list-group-item">@name</li>
+                                    }
                             </ul>
 
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="extensibilityHeading">
-                            <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#extensibilityPanel" aria-expanded="false" aria-controls="extensibilityPanel">
-                                    Extensibility
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="extensibilityPanel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="extensibilityHeading">
-                            <ul class="list-group">
-                                <li class="list-group-item">Basic Scaffolder</li>
-                                <li class="list-group-item">Browser Link Extension</li>
-                                <li class="list-group-item">Browser Link Extension (simple)</li>
-                                <li class="list-group-item">Code Snippet Extension</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="windowsStoreHeading">
-                            <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#windowsStorePanel" aria-expanded="false" aria-controls="windowsStorePanel">
-                                    Windows Store
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="windowsStorePanel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="windowsStoreHeading">
-                            <ul class="list-group">
-                                <li class="list-group-item">Blank App</li>
-                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <h4 class="service-heading">Item Templates</h4>
                 <div class="panel-group" id="itemAccordion" role="tablist" aria-multiselectable="true">
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="buildNugetHeading">
                             <h4 class="panel-title">
                                 <a role="button" data-toggle="collapse" data-parent="#itemAccordion" href="#buildNugetPanel" aria-expanded="true" aria-controls="buildNugetPanel">
-                                    Build and NuGet
+                                    Item Templates
                                 </a>
                             </h4>
                         </div>
                         <div id="buildNugetPanel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="buildNugetHeading">
                             <ul class="list-group">
-                                <li class="list-group-item">
-                                    <h5>MSBuild</h5>
-                                    <ul class="list-group">
-                                        <li class="list-group-item">Basic build script</li>
-                                        <li class="list-group-item">Basic props file</li>
-                                    </ul>
-                                </li>
-                                <li class="list-group-item">
-                                    <h5>Nuget</h5>
-                                    <ul class="list-group">
-                                        <li class="list-group-item">A basic NuGet .nuspec file</li>
-                                        <li class="list-group-item">An advanced NuGet .nuspec file</li>
-                                    </ul>
-                                </li>
-                            </ul>
-
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="itemWebHeading">
-                            <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#itemAccordion" href="#itemWebPanel" aria-expanded="false" aria-controls="itemWebPanel">
-                                    Web
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="itemWebPanel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="itemWebHeading">
-                            <ul class="list-group">
-                                <li class="list-group-item">
-                                    <h5>ASP.NET</h5>
-                                    <ul class="list-group">
-                                        <li class="list-group-item">ASP.NET Scaffolding T4 files</li>
-                                        <li class="list-group-item">HTML Whitespace Removal HttpModule</li>
-                                    </ul>
-                                </li>
-                                <li class="list-group-item">
-                                    <h5>JavaScript</h5>
-                                    <ul class="list-group">
-                                        <li class="list-group-item">AngularJs Controller</li>
-                                        <li class="list-group-item">AngularJs Directive</li>
-                                        <li class="list-group-item">AngularJs Factory</li>
-                                        <li class="list-group-item">DurandalJs main.js</li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="typeScriptHeading">
-                            <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#itemAccordion" href="#typeScriptPanel" aria-expanded="false" aria-controls="typeScriptPanel">
-                                    TypeScript
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="typeScriptPanel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="typeScriptHeading">
-                            <ul class="list-group">
-                                <li class="list-group-item">
-                                    <h5>AngularJs</h5>
-                                    <ul class="list-group">
-                                        <li class="list-group-item">AngularJs TypeScript Controller using $scope</li>
-                                        <li class="list-group-item">AngularJs TypeScript Controller using 'Controller as'</li>
-                                        <li class="list-group-item">AngularJs TypeScript Directive</li>
-                                        <li class="list-group-item">AngularJs TypeScript Factory</li>
-                                    </ul>
-                                </li>
+                                    @foreach (string name in itemTemplates)
+                                    {
+                                        <li class="list-group-item">@name</li>
+                                    }
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <h4 class="service-heading">Snippets</h4>
                 <div class="panel-group" id="snippetAccordion" role="tablist" aria-multiselectable="true">
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="cSharpHeading">
                             <h4 class="panel-title">
                                 <a role="button" data-toggle="collapse" data-parent="#snippetAccordion" href="#cSharpPanel" aria-expanded="true" aria-controls="cSharpPanel">
-                                    C#
+                                    Snippets
                                 </a>
                             </h4>
                         </div>
                         <div id="cSharpPanel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="cSharpHeading">
                             <ul class="list-group">
-                                <li class="list-group-item">FakeItEasy - Call To Must Have Happened Exactly Times</li>
-                                <li class="list-group-item">FakeItEasy - Call To Must Have Happened One Or More Times</li>
-                                <li class="list-group-item">FakeItEasy - Call To Must Have Happened Exactly Twice</li>
-                                <li class="list-group-item">FakeItEasy - Call To Must Have Happened Exactly Twice</li>
-                                <li class="list-group-item">WCF Client Usage</li>
-                            </ul>
-
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="snippetJavaScriptHeading">
-                            <h4 class="panel-title">
-                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#snippetAccordion" href="#snippetJavaScriptPanel" aria-expanded="false" aria-controls="snippetJavaScriptPanel">
-                                    JavaScript
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="snippetJavaScriptPanel" class="panel-collapse collapse" role="tabpanel" aria-labelledby="snippetJavaScriptHeading">
-                            <ul class="list-group">
-                                <li class="list-group-item">Angular Controller</li>
-                                <li class="list-group-item">Angular Directive</li>
-                                <li class="list-group-item">Angular Service</li>
-                                <li class="list-group-item">Angular Module</li>
-                                <li class="list-group-item">Angular Test Spec</li>
+                                @foreach (string name in snippets)
+                                {
+                                    <li class="list-group-item">@name</li>
+                                }
                             </ul>
                         </div>
                     </div>
@@ -195,4 +106,3 @@
         </div>
     </div>
 </section>
-    -->
