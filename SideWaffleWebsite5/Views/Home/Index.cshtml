@@ -9,16 +9,26 @@
     </div>
 </header>
 
-<hr />
-
 <!-- About Section -->
-
-<hr />
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">About</h2>
+            </div>
+            <div class="col-lg-12">
+                <p class="text-center intro-text">
+                    The SideWaffle extension adds a bunch of useful Snippets, Project- and Item Templates to Visual Studio.<br />The purpose is to make your daily work
+                    in Visual Studio a richer and more productive experience.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
 
 <!-- Features Section -->
 @await Html.PartialAsync("Features")
 
-<hr />
 
 <!-- Download Section -->
 <section id="download">
@@ -43,12 +53,9 @@
         </div>
     </div>
 </section>
+
 <!-- Release Notes Section -->
 @await Html.PartialAsync("ReleaseNotes")
 
-<hr />
-
 <!-- Team -->
 @await Html.PartialAsync("Team")
-
-<hr />

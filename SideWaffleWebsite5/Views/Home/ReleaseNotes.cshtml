@@ -1,4 +1,53 @@
-﻿@model IEnumerable<SideWaffleWebsite5.Models.Client>
+﻿@using System.Xml;
+@model IEnumerable<SideWaffleWebsite5.Models.Client>
 @inject SideWaffleWebsite5.Models.Client Client
 
-@Html.Raw(Client.GetReleaseNotes())
+@{
+    var xml = Client.GetReleaseNotes();
+
+    XmlDocument doc = new XmlDocument();
+    doc.LoadXml(xml);
+
+    var versions = Client.GetUniqueNames(doc.SelectNodes("//Version"));
+}
+
+<section id="release-notes">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Release Notes</h2>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (string version in versions)
+            {
+                <div class="col-md-4">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="webHeading">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#webPanel" aria-expanded="true" aria-controls="webPanel">
+                                        Version @version
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="webPanel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="webHeading">
+                                <ul class="list-group">
+                                    @{
+                                        var notes = Client.GetVersionNotes(doc.SelectNodes("//Version[@Name='" + version + "']/note"));
+                                    }
+
+                                    @foreach (string note in notes)
+                                    {
+                                        <li class="list-group-item">@note</li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+

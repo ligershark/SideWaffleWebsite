@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace SideWaffleWebsite5.Models
 {
@@ -53,7 +54,7 @@ namespace SideWaffleWebsite5.Models
 
         public string GetReleaseNotes()
         {
-            var html = DownloadGitHubReleaseAsset("release-notes.html").Result;
+            var html = DownloadGitHubReleaseAsset("release-notes.xml").Result;
 
             return html;
         }
@@ -63,6 +64,37 @@ namespace SideWaffleWebsite5.Models
             var xml = DownloadGitHubReleaseAsset("template-report.xml").Result;
 
             return xml;
+        }
+
+        public List<string> GetUniqueNames(XmlNodeList nodes)
+        {
+            List<string> list = new List<string>();
+            foreach (XmlNode node in nodes)
+            {
+                var attr = node.Attributes["Name"] ?? node.Attributes["Title"];
+                string name = attr.InnerText;
+                if (!list.Contains(name) && name.IndexOf("sample", StringComparison.OrdinalIgnoreCase) == -1)
+                    list.Add(name);
+            }
+
+            list.Sort();
+            list.Reverse();
+
+            return list;
+        }
+
+        public List<string> GetVersionNotes(XmlNodeList nodes)
+        {
+            List<string> list = new List<string>();
+
+            foreach (XmlNode node in nodes)
+            {
+                list.Add(node.InnerText);
+            }
+
+            list.Sort();
+
+            return list;
         }
     }
 }

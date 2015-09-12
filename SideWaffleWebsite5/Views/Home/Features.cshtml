@@ -4,30 +4,13 @@
 
 @{
     var xml = Client.GetFeaturesList();
+
     XmlDocument doc = new XmlDocument();
     doc.LoadXml(xml);
 
-    var projectTemplates = GetUniqueNames(doc.SelectNodes("//ProjectTemplate"));
-    var itemTemplates = GetUniqueNames(doc.SelectNodes("//ItemTemplate"));
-    var snippets = GetUniqueNames(doc.SelectNodes("//Snippet"));
-}
-
-@functions{
-    List<string> GetUniqueNames(XmlNodeList nodes)
-    {
-        List<string> list = new List<string>();
-        foreach (XmlNode node in nodes)
-        {
-            var attr = node.Attributes["Name"] ?? node.Attributes["Title"];
-            string name = attr.InnerText;
-            if (!list.Contains(name) && name.IndexOf("sample", StringComparison.OrdinalIgnoreCase) == -1)
-                list.Add(name);
-        }
-
-        list.Sort();
-
-        return list;
-    }
+    var projectTemplates = Client.GetUniqueNames(doc.SelectNodes("//ProjectTemplate"));
+    var itemTemplates = Client.GetUniqueNames(doc.SelectNodes("//ItemTemplate"));
+    var snippets = Client.GetUniqueNames(doc.SelectNodes("//Snippet"));
 }
 
 <section id="features">
