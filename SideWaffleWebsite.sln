@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SideWaffleWebsite5", "SideWaffleWebsite5\SideWaffleWebsite5.xproj", "{C108B98A-1EC7-4ACB-B353-41920E17730A}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SideWaffleWebsite", "SideWaffleWebsite\SideWaffleWebsite.xproj", "{C108B98A-1EC7-4ACB-B353-41920E17730A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

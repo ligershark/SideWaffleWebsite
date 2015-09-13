@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Diagnostics;
-using Microsoft.AspNet.Hosting;
 using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
+using SideWaffleWebsite.Models;
 
 namespace SideWaffleWebsite5
 {
@@ -13,7 +11,7 @@ namespace SideWaffleWebsite5
         {
             // Add MVC services to the services container.
             services.AddMvc();
-            services.AddTransient<SideWaffleWebsite5.Models.Client>();
+            services.AddTransient<Client>();
         }
 
         // Configure is called after ConfigureServices is called.

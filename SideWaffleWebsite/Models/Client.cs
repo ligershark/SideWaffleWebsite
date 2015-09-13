@@ -1,12 +1,10 @@
 ﻿using Octokit;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace SideWaffleWebsite5.Models
+namespace SideWaffleWebsite.Models
 {
     public class Client
     {
