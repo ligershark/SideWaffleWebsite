@@ -9,6 +9,8 @@
     doc.LoadXml(xml);
 
     var versions = Client.GetUniqueNames(doc.SelectNodes("//Version"));
+
+    int counter = 0;
 }
 
 <section id="release-notes">
@@ -21,6 +23,11 @@
         <div class="row">
             @foreach (string version in versions)
             {
+                if (counter != 0 && counter % 3 == 0)
+                {
+                    @:</div>
+                    @:<div class="row">
+                }
                 <div class="col-md-4">
                     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-default">
@@ -46,7 +53,10 @@
                         </div>
                     </div>
                 </div>
-            }
+
+                                            counter++;
+                                        }
+
         </div>
     </div>
 </section>
