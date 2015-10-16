@@ -1,0 +1,33 @@
+{
+  "commands": {
+    "web": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.Kestrel"
+  },
+  "dependencies": {
+    "Microsoft.AspNet.Mvc": "6.0.0-beta8",
+    "Microsoft.AspNet.Server.Kestrel": "1.0.0-beta8",
+    "Microsoft.AspNet.StaticFiles": "1.0.0-beta8",
+    "Microsoft.Framework.DependencyInjection": "1.0.0-beta8",
+    "Octokit": "0.16.0"
+  },
+  "exclude": [
+    "wwwroot",
+    "node_modules",
+    "bower_components"
+  ],
+  "frameworks": {
+    "dnx451": { }
+  },
+  "publishExclude": [
+    "node_modules",
+    "bower_components",
+    "**.xproj",
+    "**.user",
+    "**.vspscc"
+  ],
+  "scripts": {
+    "postrestore": [ "npm install", "bower install" ],
+    "prepare": [ "gulp copy" ]
+  },
+  "version": "1.0.0-*",
+  "webroot": "wwwroot"
+}
