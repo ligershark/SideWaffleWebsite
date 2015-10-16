@@ -1,0 +1,61 @@
+﻿<!-- Header -->
+<header>
+    <div class="container">
+        <div class="intro-text">
+            <div class="intro-lead-in">A collection of</div>
+            <div class="intro-lead-in">Project and Item Templates</div>
+            <a href="#download" class="page-scroll btn btn-lg btn-warning">Download Now</a>
+        </div>
+    </div>
+</header>
+
+<!-- About Section -->
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">About</h2>
+            </div>
+            <div class="col-lg-12">
+                <p class="text-center intro-text">
+                    The SideWaffle extension adds a bunch of useful Snippets, Project- and Item Templates to Visual Studio.<br />The purpose is to make your daily work
+                    in Visual Studio a richer and more productive experience.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+@await Html.PartialAsync("Features")
+
+
+<!-- Download Section -->
+<section id="download">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Download</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4 text-center">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Stable Release</div>
+                    <div class="panel-body">
+                        <p>After installing, Visual Studio will automatically notify you of any updates to SideWaffle.</p>
+                        <a href="https://visualstudiogallery.msdn.microsoft.com/a16c2d07-b2e1-4a25-87d9-194f04e7a698" class="btn btn-success">Download</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Release Notes Section -->
+@await Html.PartialAsync("ReleaseNotes")
+
+<!-- Team -->
+@await Html.PartialAsync("Team")

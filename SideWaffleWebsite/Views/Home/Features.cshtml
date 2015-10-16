@@ -1,0 +1,91 @@
+﻿@using System.Xml;
+@model IEnumerable<SideWaffleWebsite.Models.Client>
+@inject SideWaffleWebsite.Models.Client Client
+
+@{
+    var xml = Client.GetFeaturesList();
+
+    XmlDocument doc = new XmlDocument();
+    doc.LoadXml(xml);
+
+    var projectTemplates = Client.GetUniqueNames(doc.SelectNodes("//ProjectTemplate"));
+    var itemTemplates = Client.GetUniqueNames(doc.SelectNodes("//ItemTemplate"));
+    var snippets = Client.GetUniqueNames(doc.SelectNodes("//Snippet"));
+}
+
+<section id="features">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Features</h2>
+                <h3 class="section-subheading text-muted">SideWaffle has large collection of project and item tempaltes for you to choose from.</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="webHeading">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#webPanel" aria-expanded="true" aria-controls="webPanel">
+                                    Project Templates
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="webPanel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="webHeading">
+                            <ul class="list-group">
+                                    @foreach (string name in projectTemplates)
+                                    {
+                                        <li class="list-group-item">@name</li>
+                                    }
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel-group" id="itemAccordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="buildNugetHeading">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#itemAccordion" href="#buildNugetPanel" aria-expanded="true" aria-controls="buildNugetPanel">
+                                    Item Templates
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="buildNugetPanel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="buildNugetHeading">
+                            <ul class="list-group">
+                                    @foreach (string name in itemTemplates)
+                                    {
+                                        <li class="list-group-item">@name</li>
+                                    }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel-group" id="snippetAccordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="cSharpHeading">
+                            <h4 class="panel-title">
+                                <a role="button" data-toggle="collapse" data-parent="#snippetAccordion" href="#cSharpPanel" aria-expanded="true" aria-controls="cSharpPanel">
+                                    Snippets
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="cSharpPanel" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="cSharpHeading">
+                            <ul class="list-group">
+                                @foreach (string name in snippets)
+                                {
+                                    <li class="list-group-item">@name</li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
