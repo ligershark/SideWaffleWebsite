@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNet.Builder;
-using Microsoft.Framework.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using SideWaffleWebsite.Models;
 
-namespace SideWaffleWebsite5
+namespace SideWaffleWebsite
 {
     public class Startup
     {
@@ -30,6 +30,12 @@ namespace SideWaffleWebsite5
                     template: "{controller}/{action}/{id?}",
                     defaults: new { controller = "Home", action = "Index" });
             });
+
+            /*
+            *   For development purposes
+            *   Comment the lines below when ready to commit changes
+            */
+            //app.UseDeveloperExceptionPage();
         }
     }
 }

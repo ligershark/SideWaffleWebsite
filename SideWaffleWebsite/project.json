@@ -3,10 +3,11 @@
     "web": "Microsoft.AspNet.Hosting --server Microsoft.AspNet.Server.Kestrel"
   },
   "dependencies": {
-    "Microsoft.AspNet.Mvc": "6.0.0-beta8",
-    "Microsoft.AspNet.Server.Kestrel": "1.0.0-beta8",
-    "Microsoft.AspNet.StaticFiles": "1.0.0-beta8",
-    "Microsoft.Framework.DependencyInjection": "1.0.0-beta8",
+    "Microsoft.AspNet.Diagnostics": "1.0.0-rc1-final",
+    "Microsoft.AspNet.Mvc": "6.0.0-rc1-final",
+    "Microsoft.AspNet.Server.Kestrel": "1.0.0-rc1-final",
+    "Microsoft.AspNet.StaticFiles": "1.0.0-rc1-final",
+    "Microsoft.Extensions.DependencyInjection": "1.0.0-rc1-final",
     "Octokit": "0.16.0"
   },
   "exclude": [
