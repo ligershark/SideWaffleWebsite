@@ -1,5 +1,9 @@
 [cmdletbinding()]
-param()
+param(
+    [switch]$publishtodev,
+
+    [switch]$publishtoprod
+)
 
 function Get-ScriptDirectory
 {
@@ -13,10 +17,10 @@ $scriptDir = ((Get-ScriptDirectory) + "\")
 function Ensure-GeoffreyLoaded{
     [cmdletbinding()]
     param(
-        [string]$minGeoffreyModuleVersion = '0.0.10.1'
+        [string]$minGeoffreyModuleVersion = '0.0.11-beta'
     )
     process{
-        # see if nuget-powershell is available and load if not
+        # load nuget-powershell if not already
         $geoffreyloaded = $false
         if((get-command Invoke-Geoffrey -ErrorAction SilentlyContinue)){
             if($env:GeoffreySkipReload -eq $true){
@@ -44,4 +48,13 @@ function Ensure-GeoffreyLoaded{
 
 Ensure-GeoffreyLoaded
 
-Invoke-Geoffrey -scriptPath (Join-Path $scriptDir 'gfile.ps1')
+$tasknames = @('build')
+
+if($publishtodev){
+    $tasknames += 'publishtodev'
+}
+if($publishtoprod){
+    $tasknames += 'publishtoprod'
+}
+
+Invoke-Geoffrey -scriptPath (Join-Path $scriptDir 'gfile.ps1') -taskName $tasknames

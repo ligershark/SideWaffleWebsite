@@ -1,0 +1,15 @@
+os: Visual Studio 2015
+
+environment:
+  VisualStudioVersion: 14.0
+  NuGetApiKey:
+    secure: HFUEQanhaxHV/sRQYznQqg7LToxSGeIoSvrmyY29PJ1eDbXxUuYrEQ6MPAsZIQFT
+  publishusername:
+    secure: vKzn+wbStK65XnO/zj1e2w==
+  publishpwd:
+    secure: ibCCLr+tXovjswopEIYo1wpBqNbZW9m9ZvUq5wUWHIao4x0sc8pNlAFxQNUlivPSKh8/x1x4TE9AbCPmgO+SYg==
+
+configuration: Release
+
+build_script:
+  - ps: .\appveyor.ps1

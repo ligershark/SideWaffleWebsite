@@ -1,9 +1,11 @@
 {
-	"name": "package",
-	"version": "1.0.0",
-	"private": true,
-	"devDependencies": {
+  "name": "package",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
     "gulp": "3.9.0",
-    "rimraf": "2.4.4"
-	}
+    "gulp-util": "^3.0.7",
+    "rimraf": "2.4.4",
+	"chalk": "^1.1.1"
+  }
 }

@@ -11,13 +11,17 @@ $scriptDir = ((Get-ScriptDirectory) + "\")
 
 $global:swbuildsettings = new-object -TypeName PSCustomObject @{
     OutputPath = (Join-Path $scriptDir 'OutputRoot')
-    DnvmPath = "$env:USERPROFILE\.dnx\bin\dnvm.cmd"
-    DnuPath = $null
+    PackOutput = (Join-Path $scriptDir 'OutputRoot\packout')
+    DnvmPath = "$env:USERPROFILE\.dnx\bin\dnvm.cmd"    
+    Configuration = 'Release'
     DnvmInstallUrl = 'https://raw.githubusercontent.com/aspnet/Home/dev/dnvminstall.ps1'
     GlobalJsonPath = (Join-Path $scriptDir global.json)
-    WebsiteRoot = (Join-Path $scriptDir SideWaffleWebsite)
+    WebsiteRoot = (Join-Path $scriptDir 'SideWaffleWebsite')
     NpmPath = "$env:APPDATA\npm"
     VsExternalsFolder = "${env:ProgramFiles(x86)}\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\Microsoft\Web Tools\External"
+    PublishModuleVersion = '1.0.2-beta2'
+    DnuPath = $null
+    GlobalJsonVersion = $null
 }
 
 function InternalOverrideSettingsFromEnv{
@@ -58,17 +62,28 @@ InternalOverrideSettingsFromEnv -prefix 'swbuild' -settings $global:swbuildsetti
 
 task default -dependsOn build
 
-task init{
-    requires -nameorurl psbuild -version '1.1.6-beta' -noprefix -condition (-not (Get-Command -Module psbuild -Name Invoke-MSBuild -ErrorAction SilentlyContinue) )
+task init -dependsOn coreinit, initdnvm, inittools
+
+task coreinit{
+    'checking for psbuild' | Write-Output
+    requires -nameorurl psbuild -version '1.1.7-beta' -noprefix -condition (-not (Get-Command -Module psbuild -Name Invoke-MSBuild -ErrorAction SilentlyContinue) )
     
+    if(-not ([string]::IsNullOrWhiteSpace($global:swbuildsettings.OutputPath)) -and (Test-Path $global:swbuildsettings.OutputPath)){
+        Remove-Item $global:swbuildsettings.OutputPath -Recurse -Force
+    }
+
     if(-not(Test-Path $global:swbuildsettings.OutputPath)){
         New-Item -ItemType Directory -Path $global:swbuildsettings.OutputPath
+    }
+
+    if(-not(Test-Path $global:swbuildsettings.PackOutput)){
+        New-Item -ItemType Directory -Path $global:swbuildsettings.PackOutput
     }
 
     if(-not (Test-Path $global:swbuildsettings.WebsiteRoot)){
         throw ('Website root not found at [{0}]' -f $global:swbuildsettings.WebsiteRoot)
     }
-} -dependsOn initdnvm,inittools
+}
 
 task initdnvm {   
     requires -nameorurl $global:swbuildsettings.DnvmInstallUrl -condition (-not (Test-Path $global:swbuildsettings.DnvmPath))
@@ -79,18 +94,19 @@ task initdnvm {
 
     [System.IO.FileInfo]$dnvmpath = $global:swbuildsettings.DnvmPath
     # Set-Alias dnvm $global:swbuildsettings.DnvmPath
-
-    $globaljsonversion = GetVersionFromGlobalJson -globalJsonPath $global:swbuildsettings.GlobalJsonPath
-    if([string]::IsNullOrWhiteSpace($globaljsonversion)){
+    
+    $global:swbuildsettings.GlobalJsonVersion = GetVersionFromGlobalJson -globalJsonPath $global:swbuildsettings.GlobalJsonPath
+    if([string]::IsNullOrWhiteSpace($global:swbuildsettings.GlobalJsonVersion)){
         throw ('unable to read version from global.json at [{0}]' -f $global:swbuildsettings.GlobalJsonPath)
     }
 
     # ensure the runtime is installed with dnvm install
-    Invoke-CommandString -command $dnvmpath.FullName -commandArgs @('install',$globaljsonversion)
+    Invoke-CommandString -command $dnvmpath.FullName -commandArgs @('install',$global:swbuildsettings.GlobalJsonVersion)
 
     # use that version
-    Invoke-CommandString -command $dnvmpath.FullName -commandArgs @('use',$globaljsonversion)
+    Invoke-CommandString -command $dnvmpath.FullName -commandArgs @('use',$global:swbuildsettings.GlobalJsonVersion)
 
+    $globaljsonversion = $global:swbuildsettings.GlobalJsonVersion
     # set the dnupath
     [System.IO.FileInfo]$dnupath = "$env:USERPROFILE\.dnx\runtimes\dnx-clr-win-x86.$globaljsonversion\bin\dnu.cmd"
     if(-not (Test-Path $dnupath.FullName)){
@@ -116,15 +132,20 @@ task inittools{
     Add-Path (join-path $global:swbuildsettings.VsExternalsFolder 'node')
 }
 
-task build{
-    
+task build{    
     Push-Location
     try{
         Set-Location $global:swbuildsettings.WebsiteRoot
-
+        
         # restore
         'Restoring packages' | Write-Output
+        Invoke-CommandString -command npm -commandArgs @('install','-g','gulp')
+        Add-Path -pathToAdd "$env:APPDATA\npm"
+        $env:NODE_PATH=(join-path "$env:APPDATA" 'npm\node_modules')
+
         Invoke-CommandString -command $global:swbuildsettings.DnuPath -commandArgs @('restore')
+
+        Add-Path -pathToAdd (Join-Path $scriptDir 'SideWaffleWebsite\node_modules\.bin')
 
         # build
         'Building the project' | Write-Output
@@ -132,6 +153,94 @@ task build{
     }
     finally{
         Pop-Location
+    }
+}
+
+task localpublish{
+    # dnu publish --out C:\data\mycode\SideWaffleWebsite\OutputRoot\packout --configuration Release --runtime dnx-clr-win-x86.1.0.0-rc1-update1 --wwwroot "wwwroot" --iis-command "web"
+    Push-Location
+    try{
+        Set-Location $global:swbuildsettings.WebsiteRoot        
+        $dnupubargs = @('publish','--out',$global:swbuildsettings.PackOutput,'--configuration',$global:swbuildsettings.Configuration,'--runtime',('dnx-clr-win-x86.{0}' -f $global:swbuildsettings.GlobalJsonVersion),'--wwwroot','"wwwroot"','--iis-command','"web"')
+        'calling dnu publish with the following args [{0}]' -f ($dnupubargs -join ' ' ) | Write-Output
+        Invoke-CommandString -command $global:swbuildsettings.DnuPath -commandArgs $dnupubargs
+    }
+    finally{
+        Pop-Location
+    }
+} -dependsOn build
+
+task installpublishmodule{
+    'Ensuring publish-module version "{0}" is loaded' -f $global:swbuildsettings.PublishModuleVersion | Write-Output
+    requires -nameorurl publish-module -version $global:swbuildsettings.PublishModuleVersion -noprefix -condition (-not (Get-Command -Module publish-module -Name Publish-AspNet -ErrorAction SilentlyContinue) )
+}
+
+task publishtodev{
+    'Publishing to latest.sidewaffle.com' | Write-Output
+    PublishToRemote -packoutput $global:swbuildsettings.PackOutput -publishProperties (GetPublishProperties -site latest)
+} -dependsOn localpublish, installpublishmodule
+
+task publishtoprod{
+} -dependsOn localpublish, installpublishmodule
+
+function GetPublishProperties{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0,Mandatory=$true)]
+        [ValidateSet('latest','prod')]
+        [string]$site
+    )
+    process{
+        [hashtable]$pubprops = $null
+
+        switch($site){
+            'latest' {
+                $pubprops = @{
+                    'WebPublishMethod'='MSDeploy'
+                    'MSDeployServiceUrl'='sidewaffle.scm.azurewebsites.net:443'
+                    'DeployIISAppPath'='sidewaffle'
+                    'Username'=$env:publishusername
+                    'Password'=$env:publishpwd
+                }
+            }
+
+            'prod' {
+                throw ('Not yet implemented')
+            }
+
+            default {
+                throw ('Unknown value for site [{0}]' -f $site)
+            }
+        }
+
+        if([string]::IsNullOrWhiteSpace($pubprops.Username)){
+            throw ('Missing required value for username (define in $env:publishusername)')
+        }
+        if([string]::IsNullOrWhiteSpace($pubprops.Password)){
+            throw ('Missing required value for username (define in $env:publishpwd)')
+        }
+
+        # return the object here
+        $pubprops
+    }
+}
+
+function PublishToRemote{
+    [cmdletbinding()]
+    param(
+        [Parameter(Position=0)]
+        [System.IO.FileInfo]$packoutput = $global:swbuildsettings.PackOutput,
+
+        [Parameter(Position=1,Mandatory=$true)]
+        [hashtable]$publishProperties
+    )
+    process{
+        try{
+            Publish-AspNet -packoutput $packoutput.FullName -publishProperties $publishProperties
+        }
+        catch{
+            'An error occurred during publish' | Write-Error
+        }
     }
 }
 
@@ -186,52 +295,5 @@ function Add-Path{
 
         $env:path = $newPath
         [Environment]::SetEnvironmentVariable('path',$newPath,[EnvironmentVariableTarget]::Process) | Out-Null
-    }
-}
-
-function Invoke-CommandString2{
-    [cmdletbinding()]
-    param(
-        [Parameter(Mandatory=$true,Position=0,ValueFromPipeline=$true)]
-        [string[]]$command,
-        
-        [Parameter(Position=1)]
-        $commandArgs,
-
-        $ignoreErrors,
-
-        [bool]$maskSecrets
-    )
-    process{
-        foreach($cmdToExec in $command){
-            'Executing command [{0}]' -f $cmdToExec | Write-Verbose
-            
-            # write it to a .cmd file
-            $destPath = "$([System.IO.Path]::GetTempFileName()).cmd"
-            if(Test-Path $destPath){Remove-Item $destPath|Out-Null}
-            
-            try{
-                @'
-set path={0}
-"{1}" {2}
-'@ -f $env:Path, $cmdToExec, ($commandArgs -join ' ') | Set-Content -Path $destPath | Out-Null
-
-                $actualCmd = ('"{0}"' -f $destPath)
-                if($maskSecrets){
-                    cmd.exe /D /C $actualCmd | Write-Output
-                }
-                else{
-                    cmd.exe /D /C $actualCmd
-                }
-
-                if(-not $ignoreErrors -and ($LASTEXITCODE -ne 0)){
-                    $msg = ('The command [{0}] exited with code [{1}]' -f $cmdToExec, $LASTEXITCODE)
-                    throw $msg
-                }
-            }
-            finally{
-                if(Test-Path $destPath){Remove-Item $destPath -ErrorAction SilentlyContinue |Out-Null}
-            }
-        }
     }
 }
