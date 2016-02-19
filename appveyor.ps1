@@ -10,7 +10,7 @@ $branch = $env:APPVEYOR_REPO_BRANCH
 
 if(([string]::IsNullOrWhiteSpace($prnumber))){
     # it's not a PR now check branch
-    if($branch -eq 'dev3'){
+    if($branch -eq 'next'){
         $publishtodev=$true
     }
 }
