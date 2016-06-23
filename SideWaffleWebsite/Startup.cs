@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,8 +8,10 @@ namespace SideWaffleWebsite
 {
     public class Startup
     {
+        private readonly IHostingEnvironment hostingEnvironment;
         public Startup( IHostingEnvironment hostingEnvironment )
         {
+            this.hostingEnvironment = hostingEnvironment;
             var builder = new ConfigurationBuilder()
                 .SetBasePath(hostingEnvironment.ContentRootPath);
         }
@@ -25,10 +27,13 @@ namespace SideWaffleWebsite
         // Configure is called after ConfigureServices is called.
         public void Configure(IApplicationBuilder app)
         {
-            app.UseMvc();
-
             // Add static files to the request pipeline.
             app.UseStaticFiles();
+
+            if (this.hostingEnvironment.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             // Add MVC to the request pipeline.
             app.UseMvc(routes =>
@@ -39,11 +44,6 @@ namespace SideWaffleWebsite
                     defaults: new { controller = "Home", action = "Index" });
             });
 
-            /*
-            *   For development purposes
-            *   Comment the lines below when ready to commit changes
-            */
-            //app.UseDeveloperExceptionPage();
         }
     }
 }
