@@ -3,23 +3,24 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:5000",
-      "sslPort": 0
+      "applicationUrl": "http://localhost:5000/",
+      "sslPort": 44379
     }
   },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
+      "launchUrl": "https://localhost:5000/",
       "environmentVariables": {
-        "Hosting:Environment": "Development"
-      },
-      "sdkVersion": "dnx-clr-win-x86.1.0.0-rc1-update1"
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
     },
-    "Browser": {
+    "SideWaffleWebsite": {
       "commandName": "Project",
+      "commandLineArgs": "--server.urls https://*:5000",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:4000",
+      "launchUrl": "https://localhost:5000/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
