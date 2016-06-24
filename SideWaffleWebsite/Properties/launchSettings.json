@@ -10,17 +10,9 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "https://localhost:5000/",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "SideWaffleWebsite": {
-      "commandName": "Project",
       "commandLineArgs": "--server.urls https://*:5000",
       "launchBrowser": true,
-      "launchUrl": "https://localhost:5000/",
+      "launchUrl": "http://localhost:5000/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

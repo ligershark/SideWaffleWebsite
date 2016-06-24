@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNet.Mvc.Rendering;
+﻿@using Microsoft.AspNetCore.Mvc.Rendering;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" type="text/css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" type="text/css">
     <link rel="stylesheet" href="~/css/agency.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
     <!--<link rel="stylesheet" href="~/css/site.css" />-->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -44,7 +45,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand page-scroll" href="#page-top">
-                    <span><img src="~/img/logo_small.png" alt="SideWaffle logo" height="45" width="45" /></span>
+                    <span><img src="~/img/logo_small.png" alt="SideWaffle logo" height="45" width="45" id="navLogo"/></span>
                     SideWaffle
                 </a>
             </div>
@@ -72,7 +73,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <span class="copyright pull-left">Copyright &copy; SideWaffle Team 2013-2015</span>
+                        <span class="copyright pull-left">Copyright &copy; SideWaffle Team 2013-@DateTime.Now.Year</span>
                     </div>
                     <div class="col-md-6">
                         <ul class="list-inline social-buttons pull-right">
