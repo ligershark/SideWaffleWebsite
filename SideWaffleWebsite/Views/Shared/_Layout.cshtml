@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNet.Mvc.Rendering;
+﻿@using Microsoft.AspNetCore.Mvc.Rendering;
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <title>SideWaffle - a Visual Studio extension</title>
 
-    <link rel="stylesheet" href="//ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css"
+    <link rel="stylesheet" href="//ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
           asp-fallback-href="~/lib/bootstrap/css/bootstrap.min.css"
           asp-fallback-test-class="hidden" asp-fallback-test-property="visibility" asp-fallback-test-value="hidden" />
     <link rel="stylesheet" href="//ajax.aspnetcdn.com/ajax/bootstrap-touch-carousel/0.8.0/css/bootstrap-touch-carousel.css"
@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" type="text/css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" type="text/css">
     <link rel="stylesheet" href="~/css/agency.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
     <!--<link rel="stylesheet" href="~/css/site.css" />-->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -43,7 +44,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top">SideWaffle</a>
+                <a class="navbar-brand page-scroll" href="#page-top">
+                    <span><img src="~/img/logo_small.png" alt="SideWaffle logo" height="45" width="45" id="navLogo"/></span>
+                    SideWaffle
+                </a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -69,7 +73,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-6">
-                        <span class="copyright pull-left">Copyright &copy; SideWaffle Team 2013-2015</span>
+                        <span class="copyright pull-left">Copyright &copy; SideWaffle Team 2013-@DateTime.Now.Year</span>
                     </div>
                     <div class="col-md-6">
                         <ul class="list-inline social-buttons pull-right">
@@ -82,11 +86,11 @@
         </footer>
     </div>
 
-    <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.4.min.js"
+    <script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.1.min.js"
             asp-fallback-src="~/lib/jquery/jquery.min.js"
             asp-fallback-test="window.jQuery">
     </script>
-    <script src="//ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/bootstrap.min.js"
+    <script src="//ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
             asp-fallback-src="~/lib/bootstrap/js/bootstrap.min.js"
             asp-fallback-test="window.jQuery">
     </script>
