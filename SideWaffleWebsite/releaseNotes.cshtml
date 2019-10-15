@@ -1,7 +1,7 @@
 ﻿@using System.Xml;
 @{
     XmlDocument doc = new XmlDocument();
-    doc.Load(Server.MapPath("~/app_data/template-report.xml"));
+    doc.Load(Server.MapPath("~/release-notes.xml"));
 
     var projectTemplates = GetUniqueNames(doc.SelectNodes("//ProjectTemplate"));
     var itemTemplates = GetUniqueNames(doc.SelectNodes("//ItemTemplate"));
@@ -42,15 +42,15 @@
         }
 
         list.Sort();
-        
+
         return list;
     }
 }
 
 @helper CreateList(IEnumerable<string> names)
 {
-    foreach (string name in names)
-    {
+foreach (string name in names)
+{
         <li>@name</li>
-    }
+}
 }

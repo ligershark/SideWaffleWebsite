@@ -1,5 +1,8 @@
 packages/
 *sln.ide/
+SideWaffleWebsite/bower_components/
+SideWaffleWebsite/node_modules/
+.vs/
 
 #################
 ## Visual Studio

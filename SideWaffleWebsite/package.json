@@ -1,0 +1,9 @@
+{
+	"name": "package",
+	"version": "1.0.0",
+	"private": true,
+	"devDependencies": {
+    "gulp": "3.9.0",
+    "rimraf": "2.4.4"
+	}
+}
